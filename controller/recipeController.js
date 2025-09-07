@@ -1,5 +1,6 @@
 const recipeModel = require('../model/recipeModel')
 const { validateRecipe } = require('../recipeValidator');
+const autoModel = require('../model/autoModel');
 
 
 
@@ -77,7 +78,6 @@ async function addRecipeToRecipes(req, res, next) {
         errors: validateRecipe.errors
       });
     }
-
     const savedRecipe = await recipeModel.addRecipe(req.body);
     res.status(201).json(savedRecipe);
   } catch (err) {
@@ -166,4 +166,15 @@ async function getStat(req, res, next) {
 }
 
 
-module.exports = { getAllRecipes, getRecipeByParam, getRecipeById, addRecipeToRecipes, updateRecipe , deleteRecipe , getStat };
+async function getAllUsers(req, res, next) {
+  try {
+    const users = await autoModel.getUsers();
+    res.status(200).json(users);
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+
+module.exports = { getAllRecipes, getRecipeByParam, getRecipeById, addRecipeToRecipes, updateRecipe , deleteRecipe , getStat ,getAllUsers };

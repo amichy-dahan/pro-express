@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = './data/recipes.json';
+const { sequelize } = require("../db/models/index.js");
 
 async function getRecipes() {
   try {
-    const recipes = await fs.promises.readFile('./data/recipes.json', 'utf-8')
-    return JSON.parse(recipes)
+    const [result , metadata] = await sequelize.query("SELECT * FROM recipes")
+    return result;
   } catch (err) {
     err.message = "problam from read data"
     throw err;
@@ -13,8 +14,10 @@ async function getRecipes() {
 
 async function getRecipeById(id) {
   try {
-    const recipes = await fs.promises.readFile('./data/recipes.json', 'utf-8')
-    return JSON.parse(recipes).filter(r => r.id == id);
+    const recipes =await getRecipes();
+    console.log(JSON.parse(recipes.filter(r => r.id == id)))
+  
+    return recipes.filter(r => r.id == id);
   } catch (err) {
     err.message = "problam from read data"
     throw err;
@@ -63,4 +66,6 @@ try{
     throw err;
   }
 }
-module.exports = { getRecipes, addRecipe, getRecipeById, updateRecipe ,deleteRecipeFromRecipe };
+
+
+module.exports = { getRecipes, addRecipe, getRecipeById, updateRecipe ,deleteRecipeFromRecipe  };

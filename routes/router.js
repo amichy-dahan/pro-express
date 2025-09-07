@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {getAllRecipes , getRecipeByParam ,getRecipeById ,addRecipeToRecipes ,updateRecipe ,deleteRecipe ,getStat} = require('../controller/recipeController');
+const {getAllRecipes , getRecipeByParam ,getRecipeById ,addRecipeToRecipes ,updateRecipe ,deleteRecipe ,getStat ,getAllUsers} = require('../controller/recipeController');
 const { validateId } = require('../middelwares/validation');
 
 
 router.get('/',getRecipeByParam)
 
 router.get('/', getAllRecipes);
+
+router.get('/users', getAllUsers);
+
 
 router.get('/stat' , getStat)
 
